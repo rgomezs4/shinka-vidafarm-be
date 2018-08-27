@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var queries = require('../db/queries');
+var shows = require('../db/queries/shows');
 
 
 // *** GET all shows *** //
 router.get('/shows', function(req, res, next) {
-  queries.getAll()
+  shows.getAll()
   .then(function(shows) {
     res.status(200).json(shows);
   })
@@ -17,7 +17,7 @@ router.get('/shows', function(req, res, next) {
 
 // *** GET single show *** //
 router.get('/shows/:id', function(req, res, next) {
-  queries.getSingle(req.params.id)
+  shows.getSingle(req.params.id)
   .then(function(show) {
     res.status(200).json(show);
   })
@@ -28,9 +28,9 @@ router.get('/shows/:id', function(req, res, next) {
 
 // *** add show *** //
 router.post('/shows', function(req, res, next) {
-  queries.add(req.body)
+  shows.add(req.body)
   .then(function(showID) {
-    return queries.getSingle(showID);
+    return shows.getSingle(showID);
   })
   .then(function(show) {
     res.json(show);
@@ -47,9 +47,9 @@ router.put('/shows/:id', function(req, res, next) {
       error: 'You cannot update the id field'
     });
   }
-  queries.update(req.params.id, req.body)
+  shows.update(req.params.id, req.body)
   .then(function() {
-    return queries.getSingle(req.params.id);
+    return shows.getSingle(req.params.id);
   })
   .then(function(show) {
     res.status(200).json(show);
@@ -61,9 +61,9 @@ router.put('/shows/:id', function(req, res, next) {
 
 // *** delete show *** //
 router.delete('/shows/:id', function(req, res, next) {
-  queries.getSingle(req.params.id)
+  shows.getSingle(req.params.id)
   .then(function(show) {
-    queries.deleteItem(req.params.id)
+    shows.deleteItem(req.params.id)
     .then(function() {
       res.status(200).json(show);
     })

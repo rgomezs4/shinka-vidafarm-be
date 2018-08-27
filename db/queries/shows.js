@@ -1,10 +1,10 @@
-var knex = require('./knex.js');
+var knex = require('../knex.js');
 
 function Shows() {
   return knex('shows');
 }
 
-// *** queries *** //
+// *** CRUD *** //
 
 function getAll() {
   return Shows().select();
