@@ -1,36 +1,33 @@
-var knex = require('../knex.js');
+import knex from "../knex.js";
 
 function Shows() {
-  return knex('shows');
+  return knex("shows");
 }
 
 // *** CRUD *** //
 
-function getAll() {
+export const getAll = () => {
   return Shows().select();
-}
+};
 
-function getSingle(showID) {
-  return Shows().where('id', parseInt(showID)).first();
-}
+export const getSingle = showID => {
+  return Shows()
+    .where("id", parseInt(showID))
+    .first();
+};
 
-function add(show) {
-  return Shows().insert(show, 'id');
-}
+export const add = show => {
+  return Shows().insert(show, "id");
+};
 
-function update(showID, updates) {
-  return Shows().where('id', parseInt(showID)).update(updates);
-}
+export const update = (showID, updates) => {
+  return Shows()
+    .where("id", parseInt(showID))
+    .update(updates);
+};
 
-function deleteItem(showID) {
-  return Shows().where('id', parseInt(showID)).del();
-}
-
-
-module.exports = {
-  getAll: getAll,
-  getSingle: getSingle,
-  add: add,
-  update: update,
-  deleteItem: deleteItem
+export const deleteItem = showID => {
+  return Shows()
+    .where("id", parseInt(showID))
+    .del();
 };
