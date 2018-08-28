@@ -1,37 +1,39 @@
 process.env.NODE_ENV = "test";
 
-var chai = require("chai");
-var chaiHttp = require("chai-http");
-var server = require("../app");
-var knex = require("../db/knex");
+import "babel-polyfill";
+import { should as _should, use, request } from "chai";
+import chaiHttp from "chai-http";
+import server from "../app";
+import { migrate, seed } from "../db/knex";
 
-var should = chai.should();
+var should = _should();
 
-chai.use(chaiHttp);
+use(chaiHttp);
 
-describe("API Routes", function () {
-  beforeEach(function (done) {
-    knex.migrate.rollback().then(function () {
-      knex.migrate.latest().then(function () {
-        return knex.seed.run().then(function () {
-          done();
-        });
-      });
-    });
-  });
-
-  afterEach(function (done) {
-    knex.migrate.rollback().then(function () {
+describe("API Routes", () => {
+  beforeEach((done) => {
+    (async () => {
+      process.env.NODE_ENV = "test";
+      await migrate.rollback();
+      await migrate.latest();
+      await seed.run();
       done();
-    });
+    })();
   });
 
-  describe("GET /api/v1/shows", function () {
-    it("should return all shows", function (done) {
-      chai
-        .request(server)
+  afterEach((done) => {
+    (async () => {
+      process.env.NODE_ENV = "test";
+      await migrate.rollback();
+      done();
+    })();
+  });
+
+  describe("GET /api/v1/shows", () => {
+    it("should return all shows", (done) => {
+      request(server)
         .get("/api/v1/shows")
-        .end(function (err, res) {
+        .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json; // jshint ignore:line
           res.body.should.be.a("array");
@@ -51,12 +53,11 @@ describe("API Routes", function () {
     });
   });
 
-  describe("GET /api/v1/shows/:id", function () {
-    it("should return a single show", function (done) {
-      chai
-        .request(server)
+  describe("GET /api/v1/shows/:id", () => {
+    it("should return a single show", (done) => {
+      request(server)
         .get("/api/v1/shows/1")
-        .end(function (err, res) {
+        .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json; // jshint ignore:line
           res.body.should.be.a("object");
@@ -75,10 +76,9 @@ describe("API Routes", function () {
     });
   });
 
-  describe("POST /api/v1/shows", function () {
-    it("should add a show", function (done) {
-      chai
-        .request(server)
+  describe("POST /api/v1/shows", () => {
+    it("should add a show", (done) => {
+      request(server)
         .post("/api/v1/shows")
         .send({
           name: "Family Guy",
@@ -87,7 +87,7 @@ describe("API Routes", function () {
           rating: 4,
           explicit: true
         })
-        .end(function (err, res) {
+        .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json; // jshint ignore:line
           res.body.should.be.a("object");
@@ -106,16 +106,15 @@ describe("API Routes", function () {
     });
   });
 
-  describe("PUT /api/v1/shows/:id", function () {
-    it("should update a show", function (done) {
-      chai
-        .request(server)
+  describe("PUT /api/v1/shows/:id", () => {
+    it("should update a show", (done) => {
+      request(server)
         .put("/api/v1/shows/1")
         .send({
           rating: 4,
           explicit: true
         })
-        .end(function (err, res) {
+        .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json; // jshint ignore:line
           res.body.should.be.a("object");
@@ -134,12 +133,11 @@ describe("API Routes", function () {
     });
   });
 
-  describe("DELETE /api/v1/shows/:id", function () {
-    it("should delete a show", function (done) {
-      chai
-        .request(server)
+  describe("DELETE /api/v1/shows/:id", () => {
+    it("should delete a show", (done) => {
+      request(server)
         .delete("/api/v1/shows/1")
-        .end(function (error, response) {
+        .end((error, response) => {
           response.should.have.status(200);
           response.should.be.json; // jshint ignore:line
           response.body.should.be.a("object");
@@ -153,10 +151,9 @@ describe("API Routes", function () {
           response.body.rating.should.equal(3);
           response.body.should.have.property("explicit");
           response.body.explicit.should.equal(0);
-          chai
-            .request(server)
+          request(server)
             .get("/api/v1/shows")
-            .end(function (err, res) {
+            .end((err, res) => {
               res.should.have.status(200);
               res.should.be.json; // jshint ignore:line
               res.body.should.be.a("array");

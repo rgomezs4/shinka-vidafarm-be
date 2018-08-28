@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "mocha",
+    "test": "export NODE_ENV=test && mocha --compilers js:babel-core/register",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "prestart": "npm run build",
-    "start": "node dist/bin/www"
+    "start": "export NODE_ENV=development && node dist/bin/www"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -21,9 +21,14 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "gulp": "^3.9.1",
     "mocha": "^5.2.0",
     "rimraf": "^2.6.2"
   }
