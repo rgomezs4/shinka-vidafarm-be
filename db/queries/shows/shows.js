@@ -1,4 +1,4 @@
-import knex from "../knex.js";
+import knex from "../../knex.js";
 
 function Shows() {
   return knex("shows");

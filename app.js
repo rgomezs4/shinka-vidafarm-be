@@ -5,9 +5,6 @@ import logger from "morgan";
 import cookieParser from "cookie-parser";
 import { json, urlencoded } from "body-parser";
 
-import shows from "./routes/shows";
-import users from "./routes/users";
-
 var app = express();
 
 // view engine setup
@@ -24,8 +21,8 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-app.use("/api/v1", shows);
-app.use("/users", users);
+// Loads all the routes from the /routes/index.js file
+require("./routes")(app);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

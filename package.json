@@ -15,6 +15,7 @@
     "express": "^4.16.3",
     "jade": "~1.11.0",
     "knex": "^0.15.2",
+    "lodash": "^4.17.10",
     "morgan": "^1.9.0",
     "serve-favicon": "^2.5.0",
     "sqlite3": "^4.0.2"
@@ -29,6 +30,11 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "gulp": "^3.9.1",
+    "gulp-delete-lines": "0.0.7",
+    "gulp-file": "^0.4.0",
+    "gulp-footer": "^2.0.1",
+    "gulp-header": "^2.0.5",
+    "gulp-param": "^1.0.3",
     "mocha": "^5.2.0",
     "rimraf": "^2.6.2"
   }
