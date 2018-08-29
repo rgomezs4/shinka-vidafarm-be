@@ -6,7 +6,7 @@ let footer = require('gulp-footer');
 let header = require('gulp-header');
 let deleteLines = require('gulp-delete-lines');
 
-function getQueryTemplate(name) {
+function getQueryTemplate(name, idColumn) {
     return `import knex from "../../knex.js";
 
 function ${name}() {
@@ -21,35 +21,35 @@ export const getAll = () => {
 
 export const getSingle = showID => {
     return ${name}()
-    .where("id", parseInt(showID))
+    .where("${idColumn}", parseInt(showID))
     .first();
 };
 
 export const add = show => {
-    return ${name}().insert(show, "id");
+    return ${name}().insert(show, "${idColumn}");
 };
 
 export const update = (showID, updates) => {
     return ${name}()
-    .where("id", parseInt(showID))
+    .where("${idColumn}", parseInt(showID))
     .update(updates);
 };
 
 export const deleteItem = showID => {
     return ${name}()
-    .where("id", parseInt(showID))
+    .where("${idColumn}", parseInt(showID))
     .del();
 };
     `
 }
 
-function getRoutesTemplate(name, fileName) {
+function getRoutesTemplate(name, fileName, idColumn) {
     return `"use strict";
 
 import * as express from "express";
 var router = express.Router();
 
-import { getAll, getSingle, add, update, deleteItem } from '../db/queries/${fileName}/${fileName}';
+import { getAll, getSingle, add, update, deleteItem } from '../../db/queries/${fileName}/${fileName}';
 
 // *** get all *** //
 router.get("/${fileName}", async (req, res, next) => {
@@ -85,7 +85,7 @@ router.post("/${fileName}", async (req, res, next) => {
 // *** update *** //
 router.put("/${fileName}/:id", async (req, res, next) => {
     try {
-    if (req.body.hasOwnProperty("id")) {
+    if (req.body.hasOwnProperty("${idColumn}")) {
         return res.status(422).json({
         error: "You cannot update the id field"
         });
@@ -132,27 +132,27 @@ function getQueryObject(name) {
 
 }
 
-gulp.task('createQuery', function (name) {
+gulp.task('createQuery', function (name, column) {
     let queryObject = getQueryObject(name);
 
     if (fs.existsSync(queryObject.newQueryModulePath))
         throw new Error("Query already exists!!");
 
-    return file(`${queryObject.fileName}.js`, getQueryTemplate(queryObject.tableName))
+    return file(`${queryObject.fileName}.js`, getQueryTemplate(queryObject.tableName, column))
         .pipe(gulp.dest(queryObject.newQueryModulePath));
 });
 
-gulp.task('createRoutes', function(name) {
+gulp.task('createRoutes', function(name, column) {
     let queryObject = getQueryObject(name);
 
     if (fs.existsSync(queryObject.newRouteModulePath))
         throw new Error("Route already exists!!");
 
-    return file(`${queryObject.fileName}.js`, getRoutesTemplate(queryObject.tableName, queryObject.fileName))
+    return file(`${queryObject.fileName}.js`, getRoutesTemplate(queryObject.tableName, queryObject.fileName, column))
         .pipe(gulp.dest(queryObject.newRouteModulePath));
 });
 
-gulp.task('registerRoutes', function(name) {
+gulp.task('registerRoutes', function(name, column) {
     let queryObject = getQueryObject(name);
 
     return gulp.src('./routes/index.js')
