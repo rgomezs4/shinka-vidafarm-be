@@ -10,25 +10,26 @@ export const getAll = () => {
     return Provider().select();
 };
 
-export const getSingle = showID => {
+export const getSingle = id => {
     return Provider()
-    .where("ProviderCode", parseInt(showID))
+    .where("ProviderCode", id)
     .first();
 };
 
 export const add = show => {
-    return Provider().insert(show, "ProviderCode");
+    console.log(show);
+    return Provider().insert(show);
 };
 
-export const update = (showID, updates) => {
+export const update = (id, updates) => {
     return Provider()
-    .where("ProviderCode", parseInt(showID))
+    .where("ProviderCode", id)
     .update(updates);
 };
 
-export const deleteItem = showID => {
+export const deleteItem = id => {
     return Provider()
-    .where("ProviderCode", parseInt(showID))
+    .where("ProviderCode", id)
     .del();
 };
     

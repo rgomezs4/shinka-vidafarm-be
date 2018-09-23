@@ -10,9 +10,9 @@ export const getAll = () => {
     return Skulocation().select();
 };
 
-export const getSingle = showID => {
+export const getSingle = id => {
     return Skulocation()
-    .where("Id", parseInt(showID))
+    .where("Id", parseInt(id))
     .first();
 };
 
@@ -20,15 +20,15 @@ export const add = show => {
     return Skulocation().insert(show, "Id");
 };
 
-export const update = (showID, updates) => {
+export const update = (id, updates) => {
     return Skulocation()
-    .where("Id", parseInt(showID))
+    .where("Id", parseInt(id))
     .update(updates);
 };
 
-export const deleteItem = showID => {
+export const deleteItem = id => {
     return Skulocation()
-    .where("Id", parseInt(showID))
+    .where("Id", parseInt(id))
     .del();
 };
     

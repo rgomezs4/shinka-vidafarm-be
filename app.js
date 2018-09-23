@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import { join } from "path";
 import favicon from "serve-favicon";
@@ -20,6 +21,7 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
+app.use(cors());
 
 // Loads all the routes from the /routes/index.js file
 require("./routes")(app);

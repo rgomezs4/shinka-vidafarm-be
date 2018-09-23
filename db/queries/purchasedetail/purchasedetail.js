@@ -10,9 +10,9 @@ export const getAll = () => {
     return Purchasedetail().select();
 };
 
-export const getSingle = showID => {
+export const getSingle = id => {
     return Purchasedetail()
-    .where("PurchaseDetailId", parseInt(showID))
+    .where("PurchaseDetailId", parseInt(id))
     .first();
 };
 
@@ -20,15 +20,15 @@ export const add = show => {
     return Purchasedetail().insert(show, "PurchaseDetailId");
 };
 
-export const update = (showID, updates) => {
+export const update = (id, updates) => {
     return Purchasedetail()
-    .where("PurchaseDetailId", parseInt(showID))
+    .where("PurchaseDetailId", parseInt(id))
     .update(updates);
 };
 
-export const deleteItem = showID => {
+export const deleteItem = id => {
     return Purchasedetail()
-    .where("PurchaseDetailId", parseInt(showID))
+    .where("PurchaseDetailId", parseInt(id))
     .del();
 };
     

@@ -1,3 +1,4 @@
+import seq from "./seq/seq";
 import pricebysku from "./pricebysku/pricebysku";
 import user from "./user/user";
 import skulocation from "./skulocation/skulocation";
@@ -26,4 +27,5 @@ module.exports = app => {
     app.use("/api/v1", skulocation);
     app.use("/api/v1", user);
     app.use("/api/v1", pricebysku);
+    app.use("/api/v1", seq);
 } /* end of module */

@@ -10,9 +10,9 @@ export const getAll = () => {
     return Invoicedetail().select();
 };
 
-export const getSingle = showID => {
+export const getSingle = id => {
     return Invoicedetail()
-    .where("InvoiceDetailId", parseInt(showID))
+    .where("InvoiceDetailId", parseInt(id))
     .first();
 };
 
@@ -20,15 +20,15 @@ export const add = show => {
     return Invoicedetail().insert(show, "InvoiceDetailId");
 };
 
-export const update = (showID, updates) => {
+export const update = (id, updates) => {
     return Invoicedetail()
-    .where("InvoiceDetailId", parseInt(showID))
+    .where("InvoiceDetailId", parseInt(id))
     .update(updates);
 };
 
-export const deleteItem = showID => {
+export const deleteItem = id => {
     return Invoicedetail()
-    .where("InvoiceDetailId", parseInt(showID))
+    .where("InvoiceDetailId", parseInt(id))
     .del();
 };
     

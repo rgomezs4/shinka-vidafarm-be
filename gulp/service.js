@@ -19,9 +19,9 @@ export const getAll = () => {
     return ${name}().select();
 };
 
-export const getSingle = showID => {
+export const getSingle = id => {
     return ${name}()
-    .where("${idColumn}", parseInt(showID))
+    .where("${idColumn}", parseInt(id))
     .first();
 };
 
@@ -29,15 +29,15 @@ export const add = show => {
     return ${name}().insert(show, "${idColumn}");
 };
 
-export const update = (showID, updates) => {
+export const update = (id, updates) => {
     return ${name}()
-    .where("${idColumn}", parseInt(showID))
+    .where("${idColumn}", parseInt(id))
     .update(updates);
 };
 
-export const deleteItem = showID => {
+export const deleteItem = id => {
     return ${name}()
-    .where("${idColumn}", parseInt(showID))
+    .where("${idColumn}", parseInt(id))
     .del();
 };
     `
