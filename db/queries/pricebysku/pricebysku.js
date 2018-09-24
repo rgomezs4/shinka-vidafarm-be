@@ -12,23 +12,43 @@ export const getAll = () => {
 
 export const getSingle = id => {
     return Pricebysku()
-    .where("SkuCode", parseInt(id))
-    .first();
+    .where("SkuCode", id);
 };
 
 export const add = show => {
-    return Pricebysku().insert(show, "SkuCode");
+    return Pricebysku().insert(show);
 };
 
-export const update = (id, updates) => {
+export const update = (updates) => {
     return Pricebysku()
-    .where("SkuCode", parseInt(id))
-    .update(updates);
+    .where("PriceListCode", updates.PriceListCode)
+    .where("SkuCode", updates.SkuCode)
+    .update({
+        Price: updates.Price
+    });
 };
 
 export const deleteItem = id => {
     return Pricebysku()
-    .where("SkuCode", parseInt(id))
+    .where("SkuCode", id)
     .del();
 };
-    
+
+export const getBySkuAndPriceList = (sku, pricelist) => {
+    return Pricebysku()
+    .where("SkuCode", sku)
+    .where("PriceListCode", pricelist)
+    .first();
+}
+
+export const getByPriceList = pricelist => {
+    return Pricebysku()
+    .where("PriceListCode", pricelist)
+    .select();
+};
+
+export const getBySku = sku => {
+    return Pricebysku()
+    .where("SkuCode", sku)
+    .select();
+};

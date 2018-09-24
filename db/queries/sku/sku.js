@@ -12,23 +12,24 @@ export const getAll = () => {
 
 export const getSingle = id => {
     return Sku()
-    .where("SkuCode", parseInt(id))
+    .where("SkuCode", id)
     .first();
 };
 
 export const add = show => {
-    return Sku().insert(show, "SkuCode");
+    console.log(show);
+    return Sku().insert(show);
 };
 
 export const update = (id, updates) => {
     return Sku()
-    .where("SkuCode", parseInt(id))
+    .where("SkuCode", id)
     .update(updates);
 };
 
 export const deleteItem = id => {
     return Sku()
-    .where("SkuCode", parseInt(id))
+    .where("SkuCode", id)
     .del();
 };
     

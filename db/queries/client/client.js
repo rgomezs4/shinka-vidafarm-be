@@ -17,7 +17,7 @@ export const getSingle = id => {
 };
 
 export const add = show => {
-    return Client().insert(show, "ClientCode");
+    return Client().insert(show);
 };
 
 export const update = (id, updates) => {
