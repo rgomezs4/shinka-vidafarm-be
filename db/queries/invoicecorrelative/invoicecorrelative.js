@@ -17,7 +17,7 @@ export const getSingle = id => {
 };
 
 export const add = show => {
-    return Invoicecorrelative().insert(show, "CorrelativeId");
+    return Invoicecorrelative().insert(show);
 };
 
 export const update = (id, updates) => {
