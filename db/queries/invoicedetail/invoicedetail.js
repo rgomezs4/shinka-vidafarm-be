@@ -12,8 +12,8 @@ export const getAll = () => {
 
 export const getSingle = id => {
     return Invoicedetail()
-    .where("InvoiceDetailId", parseInt(id))
-    .first();
+    .where("InvoiceId", parseInt(id))
+    .select();
 };
 
 export const add = show => {

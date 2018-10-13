@@ -32,4 +32,10 @@ export const deleteItem = id => {
     .where("SkuCode", id)
     .del();
 };
-    
+
+export const getByBarcode = barcode => {
+    return Sku()
+    .where("Barcode", barcode)
+    .orWhere("AlternateBarcode", barcode)
+    .first();
+} 

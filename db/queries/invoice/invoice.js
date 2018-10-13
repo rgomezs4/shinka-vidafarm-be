@@ -1,34 +1,37 @@
 import knex from "../../knex.js";
 
 function Invoice() {
-    return knex("Invoice");
+  return knex("Invoice");
 }
 
 // *** CRUD *** //
 
 export const getAll = () => {
-    return Invoice().select();
+  return Invoice().select();
+};
+
+export const limit = l => {
+  return Invoice().select().limit(l).orderBy("InvoiceId", "desc");
 };
 
 export const getSingle = id => {
-    return Invoice()
+  return Invoice()
     .where("InvoiceId", parseInt(id))
     .first();
 };
 
 export const add = show => {
-    return Invoice().insert(show, "InvoiceId");
+  return Invoice().insert(show, "InvoiceId");
 };
 
 export const update = (id, updates) => {
-    return Invoice()
+  return Invoice()
     .where("InvoiceId", parseInt(id))
     .update(updates);
 };
 
 export const deleteItem = id => {
-    return Invoice()
+  return Invoice()
     .where("InvoiceId", parseInt(id))
     .del();
 };
-    
